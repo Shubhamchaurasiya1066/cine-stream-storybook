@@ -1,12 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Star, Calendar, Clock, ArrowLeft } from "lucide-react";
-import { getPopularMovies } from '@/lib/tmdb';
+import { getMovieDetails } from '@/lib/tmdb';
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
 
-  const movie = await getPopularMovies(id);
+const movie = await getMovieDetails(id);
 
   return {
     title: movie?.title || "Movie Details",
@@ -16,10 +16,9 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function MovieDetails({ params }) {
-  const { id } = await params;
+ const { id } = await params;
 
-  const movie = await getPopularMovies(id);
-
+const movie = await getMovieDetails(id);
   if (!movie) {
     return (
       <div className="min-h-screen bg-[#050816] flex items-center justify-center text-white">

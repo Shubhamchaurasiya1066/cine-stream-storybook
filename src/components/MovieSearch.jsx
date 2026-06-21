@@ -1,23 +1,26 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo } from "react";
+import { useSelector } from "react-redux";
 import SearchBar from "./SearchBar";
 import MovieGrid from "./MovieGrid";
 
 export default function MovieSearch({ movies }) {
-  const [filteredMovies, setFilteredMovies] = useState(movies);
+  const search = useSelector(
+    (state) => state.filter.search
+  );
 
-  const handleSearch = (query) => {
-    const filtered = movies.filter((movie) =>
-      movie.title.toLowerCase().includes(query.toLowerCase())
+  const filteredMovies = useMemo(() => {
+    return movies.filter((movie) =>
+      movie.title
+        .toLowerCase()
+        .includes(search.toLowerCase())
     );
-
-    setFilteredMovies(filtered);
-  };
+  }, [movies, search]);
 
   return (
     <>
-      <SearchBar onSearch={handleSearch} />
+      <SearchBar />
 
       {filteredMovies.length > 0 ? (
         <MovieGrid movies={filteredMovies} />

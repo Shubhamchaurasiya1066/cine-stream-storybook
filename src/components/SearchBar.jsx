@@ -1,35 +1,33 @@
 "use client";
 
-import { useState } from "react";
 import { FiSearch } from "react-icons/fi";
+import { useDispatch, useSelector } from "react-redux";
+import { setSearch } from "@/store/filterSlice";
 
-export default function SearchBar({ onSearch }) {
-  const [query, setQuery] = useState("");
+export default function SearchBar() {
+  const dispatch = useDispatch();
 
-  const handleSearch = () => {
-    onSearch(query);
-  };
+  const query = useSelector(
+    (state) => state.filter.search
+  );
 
   return (
     <div className="w-full max-w-2xl mx-auto mb-14 px-4">
       <div className="relative group">
-        
-        {/* Glow Effect */}
+
         <div className="absolute inset-0 bg-purple-600/20 blur-2xl opacity-0 group-hover:opacity-100 transition duration-500 rounded-3xl"></div>
 
-        {/* Search Box */}
         <div className="relative flex items-center bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden shadow-2xl">
-          
+
           <FiSearch className="text-gray-400 text-2xl ml-5" />
 
           <input
             type="text"
             placeholder="Search movies, actors, genres..."
             value={query}
-            onChange={(e) => {
-              setQuery(e.target.value);
-              onSearch(e.target.value);
-            }}
+            onChange={(e) =>
+              dispatch(setSearch(e.target.value))
+            }
             className="
               w-full
               bg-transparent
@@ -43,7 +41,6 @@ export default function SearchBar({ onSearch }) {
           />
 
           <button
-            onClick={handleSearch}
             className="
               bg-purple-600
               hover:bg-purple-700

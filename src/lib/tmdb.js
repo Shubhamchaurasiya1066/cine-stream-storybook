@@ -3,6 +3,7 @@ const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
 
 // POPULAR MOVIES
+console.log("TMDB KEY:", API_KEY);
 export const getPopularMovies = async () => {
   try {
     const response = await fetch(
